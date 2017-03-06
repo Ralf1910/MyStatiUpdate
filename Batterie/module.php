@@ -58,8 +58,8 @@ class Batterie extends IPSModule {
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("rollierendeZyklen", "Pro Jahr - Zyklen", "", 410), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEingespeisteEnergie", "Pro Jahr - Eingespeiste Energie", "~Electricity", 420), true);
 		AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeEingespeisteEnergie"), 1);
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeSelbstvertrauchteEnergie", "Pro Jahr - Selbstverbrauchte Energie", "~Electricity", 430), true);
-		AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeSelbstvertrauchteEnergie"), 1);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeSelbstverbrauchteEnergie", "Pro Jahr - Selbstverbrauchte Energie", "~Electricity", 430), true);
+		AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeSelbstverbrauchteEnergie"), 1);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeBezogeneEnergie", "Pro Jahr - Bezogene Energie", "~Electricity", 440), true);
 		AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeBezogeneEnergie"), 1);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeGespeicherteEnergie", "Pro Jahr - Gespeicherte Energie", "~Electricity", 450), true);
@@ -86,8 +86,8 @@ class Batterie extends IPSModule {
 
 	// Berechnung der jeweiligen Jahreswerte
 	private function RollierenderJahreswert(Integer $VariableID) {
-		//Den Datensatz von vor 365,25 Tagen abfragen (zur Berücksichtigung von Schaltjahren)
-		$historischeWerte = AC_GetLoggedValues($this->ReadPropertyInteger("Archiv"), $VariableID , time()-1000*24*60*60, time()-365.25*24*60*60, 1);
+		//Den Datensatz von vor 365 Tagen abfragen (zur Berücksichtigung von Schaltjahren)
+		$historischeWerte = AC_GetLoggedValues($this->ReadPropertyInteger("Archiv"), $VariableID , time()-1000*24*60*60, time()-365*24*60*60, 1);
 		$wertVor365d = 0;
 		foreach($historischeWerte as $wertVorEinemJahr) {
 			$wertVor365d = $wertVorEinemJahr['Value'];
@@ -122,7 +122,7 @@ class Batterie extends IPSModule {
 
 		$gespeicherteEnergie		=	getValue($this->GetIDforIdent("gespeicherteEnergie"));
 
-		$selbstvertrauchteEnergie	= 	getValue($this->GetIDforIdent("selbstverbrauchteEnergie"));
+		$selbstverbrauchteEnergie	= 	getValue($this->GetIDforIdent("selbstverbrauchteEnergie"));
 
 		$maxLadeleistung			= 	$this->ReadPropertyInteger("MaxLadeleistung");
 
@@ -170,23 +170,23 @@ class Batterie extends IPSModule {
 
 		SetValue($this->GetIDforIdent("fuellstandProzent"), round((getValue($this->GetIDforIdent("fuellstand"))*100 / $kapazitaet)/5)*5);
 
-		SetValue($this->GetIDforIdent("rollierendeEingespeisteEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("eingespeisteEnergie")));
-		SetValue($this->GetIDforIdent("rollierendeSelbstvertrauchteEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("selbstverbrauchteEnergie")));
-		SetValue($this->GetIDforIdent("rollierendeBezogeneEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("bezogeneEnergie")));
-		SetValue($this->GetIDforIdent("rollierendeGespeicherteEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("gespeicherteEnergie")));
-		SetValue($this->GetIDforIdent("rollierendeEVGV"), $this->RollierenderJahreswert($this->GetIDforIdent("EVGV")));
-		SetValue($this->GetIDforIdent("rollierendeEVGP"), $this->RollierenderJahreswert($this->GetIDforIdent("EVGP")));
-
-		SetValue($this->GetIDforIdent("rollierendeZyklen"), $this->RollierenderJahreswert($this->GetIDforIdent("zyklen")));
-
 		SetValue($this->GetIDforIdent("aktuelleEigennutzung"), min($aktuellerVerbrauch, $aktuelleErzeugung));
 
-		SetValue($this->GetIDforIdent("selbstverbrauchteEnergie"), $selbstvertrauchteEnergie + min($aktuellerVerbrauch, $aktuelleErzeugung)/60000);
+		SetValue($this->GetIDforIdent("selbstverbrauchteEnergie"), $selbstverbrauchteEnergie + min($aktuellerVerbrauch, $aktuelleErzeugung)/60000);
 
-		SetValue($this->GetIDforIdent("EVGV"), ($selbstvertrauchteEnergie + $gespeicherteEnergie)*100 / ($bezogeneEnergie + $selbstvertrauchteEnergie + $gespeicherteEnergie));
+		SetValue($this->GetIDforIdent("EVGV"), ($selbstverbrauchteEnergie + $gespeicherteEnergie)*100 / ($bezogeneEnergie + $selbstverbrauchteEnergie + $gespeicherteEnergie));
 
-		SetValue($this->GetIDforIdent("EVGP"), ($selbstvertrauchteEnergie + $gespeicherteEnergie)*100 / ($eingespeisteEnergie + $selbstvertrauchteEnergie + $gespeicherteEnergie));
+		SetValue($this->GetIDforIdent("EVGP"), ($selbstverbrauchteEnergie + $gespeicherteEnergie)*100 / ($eingespeisteEnergie + $selbstverbrauchteEnergie + $gespeicherteEnergie));
 
+		if (Date("i", time()) == 00) {
+			SetValue($this->GetIDforIdent("rollierendeEingespeisteEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("eingespeisteEnergie")));
+			SetValue($this->GetIDforIdent("rollierendeSelbstverbrauchteEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("selbstverbrauchteEnergie")));
+			SetValue($this->GetIDforIdent("rollierendeBezogeneEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("bezogeneEnergie")));
+			SetValue($this->GetIDforIdent("rollierendeGespeicherteEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("gespeicherteEnergie")));
+			SetValue($this->GetIDforIdent("rollierendeEVGV"), $this->RollierenderJahreswert($this->GetIDforIdent("EVGV")));
+			SetValue($this->GetIDforIdent("rollierendeEVGP"), $this->RollierenderJahreswert($this->GetIDforIdent("EVGP")));
+			SetValue($this->GetIDforIdent("rollierendeZyklen"), $this->RollierenderJahreswert($this->GetIDforIdent("zyklen")));
+		}
 	}
 
 
