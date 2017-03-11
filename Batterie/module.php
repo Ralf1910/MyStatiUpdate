@@ -1,6 +1,6 @@
 <?
-//  Modul zur Steuerung des Vorwerk Kobold VR200
-//
+//  Modul zur Simulation von Batterien mit verschiedenen
+//  Verbrauchern und Erzeugern
 //	Version 0.9
 //
 // ************************************************************
@@ -30,17 +30,15 @@ class Batterie extends IPSModule {
 		$this->RegisterPropertyInteger("MaxLadeleistung", 2000);
 
 
-
-
-		// Variablen anlegen
+		// Variablen anlegen und auch gleich dafür sorgen, dass sie geloggt werden
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("fuellstand", "Batterie - Füllstand", "~Electricity", 10), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "Integer.Prozent", 20), true);
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("zyklen", "Batterie - Zyklen", "", 30), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("zyklen", "Batterie - Zyklen", "", 30), true);
 
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuelleLadeleistung", "Power - Ladeleistung", "Power.Watt", 110), true);
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuelleEinspeisung", "Power - Einspeisung", "Power.Watt", 120), true);
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuelleEigennutzung", "Power - Eigennutzung", "Power.Watt", 130), true);
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuellerNetzbezug", "Power - Netzbezug", "Power.Watt", 140), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleLadeleistung", "Power - Ladeleistung", "Float.Watt", 110), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleEinspeisung", "Power - Einspeisung", "Float.Watt", 120), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleEigennutzung", "Power - Eigennutzung", "Float.Watt", 130), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuellerNetzbezug", "Power - Netzbezug", "Float.Watt", 140), true);
 
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("eingespeisteEnergie", "Energie - eingespeist", "~Electricity", 210), true);
 		AC_SetAggregationType($archiv, $this->GetIDforIdent("eingespeisteEnergie"), 1);
@@ -55,7 +53,7 @@ class Batterie extends IPSModule {
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("EVGV", "Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 310), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("EVGP", "Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 320), true);
 
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("rollierendeZyklen", "Pro Jahr - Zyklen", "", 410), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeZyklen", "Pro Jahr - Zyklen", "", 410), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEingespeisteEnergie", "Pro Jahr - Eingespeiste Energie", "~Electricity", 420), true);
 		AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeEingespeisteEnergie"), 1);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeSelbstverbrauchteEnergie", "Pro Jahr - Selbstverbrauchte Energie", "~Electricity", 430), true);
@@ -66,8 +64,6 @@ class Batterie extends IPSModule {
 		AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeGespeicherteEnergie"), 1);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEVGV", "Pro Jahr - Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 460), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEVGP", "Pro Jahr - Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 470), true);
-
-
 
 		// Updates einstellen
 		$this->RegisterTimer("Update", 60*1000, 'BAT_Update($_IPS[\'TARGET\']);');
@@ -186,7 +182,6 @@ class Batterie extends IPSModule {
 			SetValue($this->GetIDforIdent("rollierendeEVGV"), $this->RollierenderJahreswert($this->GetIDforIdent("EVGV")));
 			SetValue($this->GetIDforIdent("rollierendeEVGP"), $this->RollierenderJahreswert($this->GetIDforIdent("EVGP")));
 			SetValue($this->GetIDforIdent("rollierendeZyklen"), $this->RollierenderJahreswert($this->GetIDforIdent("zyklen")));
-			echo Date("i", time();
 		}
 	}
 
