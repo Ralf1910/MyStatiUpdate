@@ -184,7 +184,4 @@ class Batterie extends IPSModule {
 			SetValue($this->GetIDforIdent("rollierendeZyklen"), $this->RollierenderJahreswert($this->GetIDforIdent("zyklen")));
 		}
 	}
-
-
  }
-
