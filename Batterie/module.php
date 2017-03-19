@@ -17,15 +17,15 @@ class Batterie extends IPSModule {
 		// Verbraucher, Erzeuger und Batteriedaten konfigurieren
 		$this->RegisterPropertyInteger("Archiv",$archiv);
 		$this->RegisterPropertyInteger("VerbraucherP1", 24149 /*[Energie\Haushalt\aktuelle Leistung HH]*/);
-		$this->RegisterPropertyInteger("VerbraucherW1", 50657 /*[Energie\Haushalt\Verbrauchszähler HH]*/);
+		$this->RegisterPropertyInteger("VerbraucherW1", 26067 /*[Energie\Haushalt\Verbrauch letzte Minute HH]*/);
 		$this->RegisterPropertyInteger("VerbraucherP2", 16212 /*[Energie\Wärmepumpe\aktuelle Leistung WP]*/);
-		$this->RegisterPropertyInteger("VerbraucherW2", 47189 /*[Energie\Wärmepumpe\Verbrauchszähler WP]*/);
+		$this->RegisterPropertyInteger("VerbraucherW2", 32308 /*[Energie\Wärmepumpe\Verbrauch letzte Minute WP]*/);
 		$this->RegisterPropertyInteger("VerbraucherP3", 0);
 		$this->RegisterPropertyInteger("VerbraucherW3", 0);
 		$this->RegisterPropertyInteger("ErzeugerP1", 22545 /*[Energie\PV-Anlage Süd\aktuelle Leistung PS]*/);
-		$this->RegisterPropertyInteger("ErzeugerW1", 13601 /*[Energie\PV-Anlage Süd\Erzeugungszähler PS]*/);
+		$this->RegisterPropertyInteger("ErzeugerW1", 44022 /*[Energie\PV-Anlage Süd\Verbrauch letzte Minute PS]*/);
 		$this->RegisterPropertyInteger("ErzeugerP2", 16594 /*[Energie\PV-Anlage Nord\aktuelle Leistung PN]*/);
-		$this->RegisterPropertyInteger("ErzeugerW2", 16756 /*[Energie\PV-Anlage Nord\Erzeugungszähler PN]*/);
+		$this->RegisterPropertyInteger("ErzeugerW2", 16756 45660 /*[Energie\PV-Anlage Nord\Verbrauch letzte Minute PN]*/);
 		$this->RegisterPropertyInteger("ErzeugerP3", 0);
 		$this->RegisterPropertyInteger("ErzeugerW3", 0);
 		$this->RegisterPropertyInteger("Kapazitaet", 13500);
