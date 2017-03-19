@@ -25,7 +25,7 @@ class Batterie extends IPSModule {
 		$this->RegisterPropertyInteger("ErzeugerP1", 22545 /*[Energie\PV-Anlage Süd\aktuelle Leistung PS]*/);
 		$this->RegisterPropertyInteger("ErzeugerW1", 44022 /*[Energie\PV-Anlage Süd\Verbrauch letzte Minute PS]*/);
 		$this->RegisterPropertyInteger("ErzeugerP2", 16594 /*[Energie\PV-Anlage Nord\aktuelle Leistung PN]*/);
-		$this->RegisterPropertyInteger("ErzeugerW2", 16756 45660 /*[Energie\PV-Anlage Nord\Verbrauch letzte Minute PN]*/);
+		$this->RegisterPropertyInteger("ErzeugerW2", 45660 /*[Energie\PV-Anlage Nord\Verbrauch letzte Minute PN]*/);
 		$this->RegisterPropertyInteger("ErzeugerP3", 0);
 		$this->RegisterPropertyInteger("ErzeugerW3", 0);
 		$this->RegisterPropertyInteger("Kapazitaet", 13500);
