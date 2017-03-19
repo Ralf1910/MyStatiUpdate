@@ -11,9 +11,9 @@
 	{ "type": "SelectVariable", "name": "VerbraucherP1", "caption": "Verbraucher 1 Leistung" },
 	{ "type": "SelectVariable", "name": "VerbraucherW1", "caption": "Verbraucher 1 Zähler" },
 	{ "type": "SelectVariable", "name": "VerbraucherP2", "caption": "Verbraucher 2 Leistung" },
-	{ "type": "SelectVariable", "name": "VerbraucherP2", "caption": "Verbraucher 2 Zähler" },
-	{ "type": "SelectVariable", "name": "VerbraucherP3", "caption": "Verbraucher 3 Zähler" },
+	{ "type": "SelectVariable", "name": "VerbraucherW2", "caption": "Verbraucher 2 Zähler" },
 	{ "type": "SelectVariable", "name": "VerbraucherP3", "caption": "Verbraucher 3 Leistung" },
+	{ "type": "SelectVariable", "name": "VerbraucherW3", "caption": "Verbraucher 3 Zähler" },
 	{ "type": "ValidationTextBox", "name": "Kapazitaet", "caption": "Kapazität(Wh)" },
 	{ "type": "ValidationTextBox", "name": "MaxLadeleistung", "caption": "Ladeleistung (W)" }
 
