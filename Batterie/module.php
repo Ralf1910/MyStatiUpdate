@@ -35,7 +35,7 @@ class Batterie extends IPSModule {
 		// Variablen anlegen und auch gleich dafür sorgen, dass sie geloggt werden
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("fuellstand", "Batterie - Füllstand", "~Electricity", 10), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "Integer.Prozent", 20), true);
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("zyklen", "Batterie - Zyklen", "", 30), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("zyklen", "Batterie - Zyklen", "Float.BatterieZyklen", 30), true);
 
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleLadeleistung", "Power - Ladeleistung", "Float.Watt", 110), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleEinspeisung", "Power - Einspeisung", "Float.Watt", 120), true);
@@ -55,7 +55,7 @@ class Batterie extends IPSModule {
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("EVGV", "Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 310), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("EVGP", "Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 320), true);
 
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeZyklen", "Pro Jahr - Zyklen", "", 410), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeZyklen", "Pro Jahr - Zyklen", "Float.BatterieZyklen", 410), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEingespeisteEnergie", "Pro Jahr - Eingespeiste Energie", "~Electricity", 420), true);
 		AC_SetAggregationType($archiv, $this->GetIDforIdent("rollierendeEingespeisteEnergie"), 1);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeSelbstverbrauchteEnergie", "Pro Jahr - Direktverbrauchte Energie", "~Electricity", 430), true);
