@@ -37,10 +37,10 @@ class Batterie extends IPSModule {
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "Integer.Prozent", 20), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("zyklen", "Batterie - Zyklen", "Float.BatterieZyklen", 30), true);
 
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleLadeleistung", "Power - Ladeleistung", "Integer.Watt", 110), true);
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleEinspeisung", "Power - Einspeisung", "Integer.Watt", 120), true);
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleEigennutzung", "Power - Eigennutzung", "Integer.Watt", 130), true);
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuellerNetzbezug", "Power - Netzbezug", "Integer.Watt", 140), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuelleLadeleistung", "Power - Ladeleistung", "Integer.Watt", 110), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuelleEinspeisung", "Power - Einspeisung", "Integer.Watt", 120), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuelleEigennutzung", "Power - Eigennutzung", "Integer.Watt", 130), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("aktuellerNetzbezug", "Power - Netzbezug", "Integer.Watt", 140), true);
 
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("eingespeisteEnergie", "Energie - eingespeist", "~Electricity", 210), true);
 		AC_SetAggregationType($archiv, $this->GetIDforIdent("eingespeisteEnergie"), 1);
