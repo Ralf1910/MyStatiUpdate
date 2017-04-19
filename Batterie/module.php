@@ -37,10 +37,10 @@ class Batterie extends IPSModule {
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "Integer.Prozent", 20), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("zyklen", "Batterie - Zyklen", "Float.BatterieZyklen", 30), true);
 
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleLadeleistung", "Power - Ladeleistung", "Float.Watt", 110), true);
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleEinspeisung", "Power - Einspeisung", "Float.Watt", 120), true);
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleEigennutzung", "Power - Eigennutzung", "Float.Watt", 130), true);
-		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuellerNetzbezug", "Power - Netzbezug", "Float.Watt", 140), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleLadeleistung", "Power - Ladeleistung", "Integer.Watt", 110), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleEinspeisung", "Power - Einspeisung", "Integer.Watt", 120), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuelleEigennutzung", "Power - Eigennutzung", "Integer.Watt", 130), true);
+		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("aktuellerNetzbezug", "Power - Netzbezug", "Integer.Watt", 140), true);
 
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("eingespeisteEnergie", "Energie - eingespeist", "~Electricity", 210), true);
 		AC_SetAggregationType($archiv, $this->GetIDforIdent("eingespeisteEnergie"), 1);
@@ -183,7 +183,6 @@ class Batterie extends IPSModule {
 			}
 		}
 
-		SetValue($this->GetIDforIdent("zyklen"), getValue($this->GetIDforIdent("gespeicherteEnergie")) / $kapazitaet);
 
 		SetValue($this->GetIDforIdent("fuellstandProzent"), round((getValue($this->GetIDforIdent("fuellstand"))*100 / $kapazitaet)/5)*5);
 
@@ -191,13 +190,16 @@ class Batterie extends IPSModule {
 
 		SetValue($this->GetIDforIdent("selbstverbrauchteEnergie"), $direktverbrauchteEnergie + min($aktuellerVerbrauchW, $aktuelleErzeugungW));
 
-		if (($bezogeneEnergie + $direktverbrauchteEnergie + $gespeicherteEnergie)>0)
-			SetValue($this->GetIDforIdent("EVGV"), ($direktverbrauchteEnergie + $gespeicherteEnergie)*100 / ($bezogeneEnergie + $direktverbrauchteEnergie + $gespeicherteEnergie));
-
-		if (($eingespeisteEnergie + $direktverbrauchteEnergie + $gespeicherteEnergie)>0)
-			SetValue($this->GetIDforIdent("EVGP"), ($direktverbrauchteEnergie + $gespeicherteEnergie)*100 / ($eingespeisteEnergie + $direktverbrauchteEnergie + $gespeicherteEnergie));
 
 		if (Date("i", time()) == 00) {
+			SetValue($this->GetIDforIdent("zyklen"), getValue($this->GetIDforIdent("gespeicherteEnergie")) / $kapazitaet);
+
+			if (($bezogeneEnergie + $direktverbrauchteEnergie + $gespeicherteEnergie)>0)
+				SetValue($this->GetIDforIdent("EVGV"), ($direktverbrauchteEnergie + $gespeicherteEnergie)*100 / ($bezogeneEnergie + $direktverbrauchteEnergie + $gespeicherteEnergie));
+
+			if (($eingespeisteEnergie + $direktverbrauchteEnergie + $gespeicherteEnergie)>0)
+				SetValue($this->GetIDforIdent("EVGP"), ($direktverbrauchteEnergie + $gespeicherteEnergie)*100 / ($eingespeisteEnergie + $direktverbrauchteEnergie + $gespeicherteEnergie));
+
 			SetValue($this->GetIDforIdent("rollierendeEingespeisteEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("eingespeisteEnergie")));
 			SetValue($this->GetIDforIdent("rollierendeSelbstverbrauchteEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("selbstverbrauchteEnergie")));
 			SetValue($this->GetIDforIdent("rollierendeBezogeneEnergie"), $this->RollierenderJahreswert($this->GetIDforIdent("bezogeneEnergie")));
