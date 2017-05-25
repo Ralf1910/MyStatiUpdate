@@ -32,7 +32,19 @@ class Batterie extends IPSModule {
 		$this->RegisterPropertyInteger("MaxLadeleistung", 7000);
 
 
-		// Variablen anlegen und auch gleich dafür sorgen, dass sie geloggt werden
+
+		// Updates einstellen
+		$this->RegisterTimer("Update", 60*1000, 'BAT_Update($_IPS[\'TARGET\']);');
+
+	}
+
+
+	// Überschreibt die intere IPS_ApplyChanges($id) Funktion
+	public function ApplyChanges() {
+		// Diese Zeile nicht löschen
+		parent::ApplyChanges();
+
+ 	    // Variablen anlegen und auch gleich dafür sorgen, dass sie geloggt werden
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("fuellstand", "Batterie - Füllstand", "~Electricity", 10), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "Integer.Prozent", 20), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("zyklen", "Batterie - Zyklen", "Float.BatterieZyklen", 30), true);
@@ -67,16 +79,6 @@ class Batterie extends IPSModule {
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEVGV", "Pro Jahr - Eigenverbrauch / Gesamtverbrauch", "Float.Prozent", 460), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("rollierendeEVGP", "Pro Jahr - Eigenverbrauch / Gesamtproduktion", "Float.Prozent", 470), true);
 
-		// Updates einstellen
-		$this->RegisterTimer("Update", 60*1000, 'BAT_Update($_IPS[\'TARGET\']);');
-
-	}
-
-
-	// Überschreibt die intere IPS_ApplyChanges($id) Funktion
-	public function ApplyChanges() {
-		// Diese Zeile nicht löschen
-		parent::ApplyChanges();
 
 		//Timerzeit setzen in Minuten
 		$this->SetTimerInterval("Update", 60*1000);
