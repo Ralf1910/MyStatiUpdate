@@ -44,6 +44,8 @@ class Batterie extends IPSModule {
 		// Diese Zeile nicht löschen
 		parent::ApplyChanges();
 
+		$archiv = IPS_GetInstanceIDByName("Archiv", 0 );
+
  	    // Variablen anlegen und auch gleich dafür sorgen, dass sie geloggt werden
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableFloat("fuellstand", "Batterie - Füllstand", "~Electricity", 10), true);
 		AC_SetLoggingStatus($archiv, $this->RegisterVariableInteger("fuellstandProzent", "Batterie - Füllstand Prozent", "Integer.Prozent", 20), true);
