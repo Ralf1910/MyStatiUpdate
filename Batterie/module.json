@@ -1,13 +1,13 @@
 {
-"id": "{9A2B348E-7159-4ADA-983B-AE5C914FA00C}",
-  "name": "Batterie",
+"id": "{00BFC330-F00E-4952-A1A9-1280B479A93B}",
+  "name": "StatiUpdate",
   "type": 3,
   "vendor": "",
   "aliases": [
-    "Virtuelle Batterie"
+    "Utils for Stati updates"
   ],
   "parentRequirements": [],
   "childRequirements": [],
   "implemented": [],
-  "prefix": "BAT"
+  "prefix": "UPD"
 } 
