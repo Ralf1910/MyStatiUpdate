@@ -1,0 +1,13 @@
+{
+"id": "{00BFC330-F00E-4952-A1A9-1280B479A93B}",
+  "name": "StatiUpdate",
+  "type": 3,
+  "vendor": "",
+  "aliases": [
+    "Utils for Stati updates"
+  ],
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "UPD"
+} 
