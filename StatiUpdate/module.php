@@ -41,5 +41,9 @@ class StatiUpdate extends IPSModule {
 			setValueFloat($targetID, max(min(Round(getValueFloat($sourceID)), $maxLeistung),$minLeistung));		
 	}
 	
+	// Funktion zur Umrechnung der Helligkeitsweiter des Outdoor Helligkeitsmelder in Lux
+	//
+	
+	
  }
  ?>
