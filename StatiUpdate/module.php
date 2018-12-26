@@ -44,7 +44,7 @@ class StatiUpdate extends IPSModule {
 	// Funktion zur Umrechnung der Helligkeitsweiter des Outdoor Helligkeitsmelder in Lux
 	//
 	
-	public function UpdateHelligkeit ($targetID, $sourceID, $sensorType)
+	public function UpdateHelligkeit($targetID, $sourceID, $sensorType)
 	{
 		$HM_SEC_MDIR[0]	   = 0;
 		$HM_SEC_MDIR[10]   = 0;
@@ -103,13 +103,23 @@ class StatiUpdate extends IPSModule {
 		$HM_SEC_MIDR_O[255]= 32000;
  
 		$sourceHelligkeit = getValueInteger($sourceID);
+        	$targetHelligkeit = -1;
 		
 		$sourceFloor = floor($sourceHelligkeit/10)*10;
-		$sourceCeil  = max(ceil($sourceHelligkeit/10)*10,255);
-		$sourceFraction = $sourceHelligkeit - $sourceFloor;
+ 		$sourceCeil  = min(ceil($sourceHelligkeit/10)*10,255);
+ 		$sourceFraction = $sourceHelligkeit - $sourceFloor;
 		
-		$targetHelligkeit = ($HM_SEC_MDIR[$sourceCeil] - $HM_SEC_MDIR[$sourceFloor]) / ($sourceCeil - $sourceFloor) * ($sourceFraction-$sourceFloor)+$HM_SEC_MDIR[$sourceFloor];
+		if ($sensorType == "HM_SEC_MDIR")
+    	if ($sourceFloor == $sourceCeil)
+      	$targetHelligkeit = $HM_SEC_MDIR[$sourceFloor];
+      else
+		   	$targetHelligkeit = ($HM_SEC_MDIR[$sourceCeil] - $HM_SEC_MDIR[$sourceFloor]) / ($sourceCeil - $sourceFloor) * ($sourceFraction)+$HM_SEC_MDIR[$sourceFloor];
+		if ($sensorType == "HM_SEC_MDIR_O")
+      if ($sourceFloor == $sourceCeil)
+      	$targetHelligkeit = $HM_SEC_MDIR_O[$sourceFloor];
+      else
+		  	$targetHelligkeit = ($HM_SEC_MDIR_O[$sourceCeil] - $HM_SEC_MDIR_O[$sourceFloor]) / ($sourceCeil - $sourceFloor) * ($sourceFraction)+$HM_SEC_MDIR_O[$sourceFloor];
 		
-	
+	   setValueFloat($targetID, $targetHelligkeit);
 	}
  ?>
