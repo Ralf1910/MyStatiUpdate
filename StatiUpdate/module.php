@@ -122,4 +122,4 @@ class StatiUpdate extends IPSModule {
 		
 	   setValueFloat($targetID, $targetHelligkeit);
 	}
- ?>
+?>
